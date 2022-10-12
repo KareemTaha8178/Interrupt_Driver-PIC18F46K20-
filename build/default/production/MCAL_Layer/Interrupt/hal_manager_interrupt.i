@@ -4834,10 +4834,21 @@ typedef enum{
 void INT0_ISR(void);
 void INT1_ISR(void);
 void INT2_ISR(void);
+void RB4_ISR(void);
+void RB5_ISR(void);
+void RB6_ISR(void);
+void RB7_ISR(void);
 # 9 "MCAL_Layer/Interrupt/hal_manager_interrupt.c" 2
-# 25 "MCAL_Layer/Interrupt/hal_manager_interrupt.c"
+# 26 "MCAL_Layer/Interrupt/hal_manager_interrupt.c"
 void __attribute__((picinterrupt(("")))) InterruptManager(void){
     if((INTCONbits.INT0IE == 1) && (INTCONbits.INT0IF == 1)) INT0_ISR();
     if((INTCON3bits.INT1IE == 1) && (INTCON3bits.INT1IF == 1)) INT1_ISR();
     if((INTCON3bits.INT2IE == 1) && (INTCON3bits.INT2IF == 1)) INT2_ISR();
+    if((INTCONbits.RBIE == 1) && (INTCONbits.RBIF == 1) && (PORTBbits.RB4 == 1)) RB4_ISR();
+    if((INTCONbits.RBIE == 1) && (INTCONbits.RBIF == 1) && (PORTBbits.RB5 == 1)) RB5_ISR();
+    if((INTCONbits.RBIE == 1) && (INTCONbits.RBIF == 1) && (PORTBbits.RB6 == 1)) RB6_ISR();
+    if((INTCONbits.RBIE == 1) && (INTCONbits.RBIF == 1) && (PORTBbits.RB7 == 1)) RB7_ISR();
+
+
+
 }

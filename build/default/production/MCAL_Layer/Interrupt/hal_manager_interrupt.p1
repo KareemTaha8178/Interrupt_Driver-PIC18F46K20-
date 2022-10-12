@@ -44,6 +44,41 @@ Version 4.0 HI-TECH Software Intermediate Code
 "24
 [; ;MCAL_Layer/Interrupt/hal_manager_interrupt.h: 24: void INT2_ISR(void);
 [v _INT2_ISR `(v ~T0 @X0 0 ef ]
+"196 C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4620.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4620.h: 196:     struct {
+[s S19 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S19 . RB0 RB1 RB2 RB3 RB4 RB5 RB6 RB7 ]
+"206
+[; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4620.h: 206:     struct {
+[s S20 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S20 . INT0 INT1 INT2 CCP2 KBI0 KBI1 KBI2 KBI3 ]
+"216
+[; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4620.h: 216:     struct {
+[s S21 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S21 . AN12 AN10 AN8 AN9 AN11 PGM PGC PGD ]
+"226
+[; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4620.h: 226:     struct {
+[s S22 :3 `uc 1 :1 `uc 1 ]
+[n S22 . . CCP2_PA2 ]
+"195
+[; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4620.h: 195: typedef union {
+[u S18 `S19 1 `S20 1 `S21 1 `S22 1 ]
+[n S18 . . . . . ]
+"231
+[; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4620.h: 231: extern volatile PORTBbits_t PORTBbits __attribute__((address(0xF81)));
+[v _PORTBbits `VS18 ~T0 @X0 0 e@3969 ]
+"25 MCAL_Layer/Interrupt/hal_manager_interrupt.h
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.h: 25: void RB4_ISR(void);
+[v _RB4_ISR `(v ~T0 @X0 0 ef ]
+"26
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.h: 26: void RB5_ISR(void);
+[v _RB5_ISR `(v ~T0 @X0 0 ef ]
+"27
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.h: 27: void RB6_ISR(void);
+[v _RB6_ISR `(v ~T0 @X0 0 ef ]
+"28
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.h: 28: void RB7_ISR(void);
+[v _RB7_ISR `(v ~T0 @X0 0 ef ]
 "55 C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4620.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4620.h: 55: __asm("PORTA equ 0F80h");
 [; <" PORTA equ 0F80h ;# ">
@@ -456,28 +491,48 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4620.h: 6716: __asm("TOSU equ 0FFFh");
 [; <" TOSU equ 0FFFh ;# ">
 [v $root$_InterruptManager `(v ~T0 @X0 0 e ]
-"25 MCAL_Layer/Interrupt/hal_manager_interrupt.c
-[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 25: void __attribute__((picinterrupt(("")))) InterruptManager(void){
+"26 MCAL_Layer/Interrupt/hal_manager_interrupt.c
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 26: void __attribute__((picinterrupt(("")))) InterruptManager(void){
 [v _InterruptManager `(v ~T39 @X0 1 ef ]
 {
 [e :U _InterruptManager ]
 [f ]
-"26
-[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 26:     if((INTCONbits.INT0IE == 1) && (INTCONbits.INT0IF == 1)) INT0_ISR();
+"27
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 27:     if((INTCONbits.INT0IE == 1) && (INTCONbits.INT0IF == 1)) INT0_ISR();
 [e $ ! && == -> . . _INTCONbits 0 4 `i -> 1 `i == -> . . _INTCONbits 0 1 `i -> 1 `i 275  ]
 [e ( _INT0_ISR ..  ]
 [e :U 275 ]
-"27
-[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 27:     if((INTCON3bits.INT1IE == 1) && (INTCON3bits.INT1IF == 1)) INT1_ISR();
+"28
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 28:     if((INTCON3bits.INT1IE == 1) && (INTCON3bits.INT1IF == 1)) INT1_ISR();
 [e $ ! && == -> . . _INTCON3bits 0 3 `i -> 1 `i == -> . . _INTCON3bits 0 0 `i -> 1 `i 276  ]
 [e ( _INT1_ISR ..  ]
 [e :U 276 ]
-"28
-[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 28:     if((INTCON3bits.INT2IE == 1) && (INTCON3bits.INT2IF == 1)) INT2_ISR();
+"29
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 29:     if((INTCON3bits.INT2IE == 1) && (INTCON3bits.INT2IF == 1)) INT2_ISR();
 [e $ ! && == -> . . _INTCON3bits 0 4 `i -> 1 `i == -> . . _INTCON3bits 0 1 `i -> 1 `i 277  ]
 [e ( _INT2_ISR ..  ]
 [e :U 277 ]
-"29
-[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 29: }
+"30
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 30:     if((INTCONbits.RBIE == 1) && (INTCONbits.RBIF == 1) && (PORTBbits.RB4 == 1)) RB4_ISR();
+[e $ ! && && == -> . . _INTCONbits 0 3 `i -> 1 `i == -> . . _INTCONbits 0 0 `i -> 1 `i == -> . . _PORTBbits 0 4 `i -> 1 `i 278  ]
+[e ( _RB4_ISR ..  ]
+[e :U 278 ]
+"31
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 31:     if((INTCONbits.RBIE == 1) && (INTCONbits.RBIF == 1) && (PORTBbits.RB5 == 1)) RB5_ISR();
+[e $ ! && && == -> . . _INTCONbits 0 3 `i -> 1 `i == -> . . _INTCONbits 0 0 `i -> 1 `i == -> . . _PORTBbits 0 5 `i -> 1 `i 279  ]
+[e ( _RB5_ISR ..  ]
+[e :U 279 ]
+"32
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 32:     if((INTCONbits.RBIE == 1) && (INTCONbits.RBIF == 1) && (PORTBbits.RB6 == 1)) RB6_ISR();
+[e $ ! && && == -> . . _INTCONbits 0 3 `i -> 1 `i == -> . . _INTCONbits 0 0 `i -> 1 `i == -> . . _PORTBbits 0 6 `i -> 1 `i 280  ]
+[e ( _RB6_ISR ..  ]
+[e :U 280 ]
+"33
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 33:     if((INTCONbits.RBIE == 1) && (INTCONbits.RBIF == 1) && (PORTBbits.RB7 == 1)) RB7_ISR();
+[e $ ! && && == -> . . _INTCONbits 0 3 `i -> 1 `i == -> . . _INTCONbits 0 0 `i -> 1 `i == -> . . _PORTBbits 0 7 `i -> 1 `i 281  ]
+[e ( _RB7_ISR ..  ]
+[e :U 281 ]
+"37
+[; ;MCAL_Layer/Interrupt/hal_manager_interrupt.c: 37: }
 [e :UE 274 ]
 }
