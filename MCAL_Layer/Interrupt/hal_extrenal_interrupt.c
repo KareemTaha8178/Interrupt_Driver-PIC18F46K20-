@@ -20,6 +20,12 @@ static void(*INT0_InterruptHandler)(void) = NULL;
 static void(*INT1_InterruptHandler)(void) = NULL;
 static void(*INT2_InterruptHandler)(void) = NULL;
 
+
+static void(*RB4_InterruptHandler)(void) = NULL;
+static void(*RB5_InterruptHandler)(void) = NULL;
+static void(*RB6_InterruptHandler)(void) = NULL;
+static void(*RB7_InterruptHandler)(void) = NULL;
+
 static STD_ReturnType Interrupt_INTx_Enable(const Interrupt_INTx_t *interrupt_obj);
 static STD_ReturnType Interrupt_INTx_Disable(const Interrupt_INTx_t *interrupt_obj);
 static STD_ReturnType Interrupt_INTx_Priority_init(const Interrupt_INTx_t *interrupt_obj);
@@ -50,21 +56,20 @@ STD_ReturnType Interrupt_INTx_Init(const Interrupt_INTx_t *interrupt_obj){
         /*Disable*/
         ret = Interrupt_INTx_Disable(interrupt_obj);
         /*Clear Flag*/
-        ret = Interrupt_INTx_Clear_Flag(interrupt_obj);
+        ret |= Interrupt_INTx_Clear_Flag(interrupt_obj);
         /*Edge set*/
-        ret = Interrupt_INTx_Edge_init(interrupt_obj);
+        ret |= Interrupt_INTx_Edge_init(interrupt_obj);
         /*Priority Set*/
         #if Interrupt_Priority_Levels_Enable == Interrupt_Feature_Enable
-        ret = Interrupt_INTx_Priority_init(interrupt_obj);
+        ret |= Interrupt_INTx_Priority_init(interrupt_obj);
         #endif
         /*I/O Pin*/
-        ret = Interrupt_INTx_Pin(interrupt_obj);
+        ret |= Interrupt_INTx_Pin(interrupt_obj);
         /*Call Back*/
-        ret = Interrupt_INTx_SetInterruptHandler(interrupt_obj);
+        ret |= Interrupt_INTx_SetInterruptHandler(interrupt_obj);
         /*Enable*/
-        ret = Interrupt_INTx_Enable(interrupt_obj);
-        
-        
+        ret |= Interrupt_INTx_Enable(interrupt_obj);
+
     }
     return ret;
 }
@@ -101,6 +106,48 @@ void INT2_ISR(void){
     
 }
 
+void RB4_ISR(void){
+    /*Clear Flag*/
+    RBx_OnChange_Interrupt_Flag_Clear();
+    /*Code*/
+    
+    /*Call Back Fun*/
+    if(RB4_InterruptHandler) RB4_InterruptHandler();
+    
+}
+
+void RB5_ISR(void){
+    /*Clear Flag*/
+    RBx_OnChange_Interrupt_Flag_Clear();
+    /*Code*/
+    
+    /*Call Back Fun*/
+    if(RB5_InterruptHandler) RB5_InterruptHandler();
+    
+}
+
+
+void RB6_ISR(void){
+    /*Clear Flag*/
+    RBx_OnChange_Interrupt_Flag_Clear();
+    /*Code*/
+    
+    /*Call Back Fun*/
+    if(RB6_InterruptHandler) RB6_InterruptHandler();
+    
+}
+
+
+void RB7_ISR(void){
+    /*Clear Flag*/
+    RBx_OnChange_Interrupt_Flag_Clear();
+    /*Code*/
+    
+    /*Call Back Fun*/
+    if(RB7_InterruptHandler) RB7_InterruptHandler();
+    
+}
+
 /**
  * 
  * @param interrupt_obj
@@ -124,8 +171,45 @@ STD_ReturnType Interrupt_RBx_Init(const Interrupt_RBx_t *interrupt_obj){
     STD_ReturnType ret = E_OK;
     if(interrupt_obj == NULL) ret = E_NOT_OK; 
     else{
+        RBx_OnChange_Interrupt_Disable();
         
+        RBx_OnChange_Interrupt_Flag_Clear();
         
+        #if Interrupt_Priority_Levels_Enable == Interrupt_Feature_Enable
+        Interrupt_PriorityLevelsEnable();
+        if(interrupt_obj->priority == INTERRUPT_High_Priority){
+             Interrupt_GlobalInterruptHighEnable();
+             RBx_OnChange_Interrupt_Priority_High();
+             
+        }else{
+              Interrupt_GlobalInterruptLowEnable();
+              RBx_OnChange_Interrupt_Priority_Low();
+        }
+        #else
+        Interrupt_GlobalInterruptEnable();
+        Interrupt_PeripheralInterruptEnable();
+        #endif
+        /*initialize pin to be input*/
+        ret = gpio_pin_direction_init(&(interrupt_obj->mcu_pin));
+        /**/
+        switch(interrupt_obj->mcu_pin.pin){
+            case GPIO_PIN4:
+                RB4_InterruptHandler = interrupt_obj->Interrupt_Handler;
+                break;
+            case GPIO_PIN5:
+                RB5_InterruptHandler = interrupt_obj->Interrupt_Handler;
+                break; 
+            case GPIO_PIN6:
+                RB6_InterruptHandler = interrupt_obj->Interrupt_Handler;
+                break;
+            case GPIO_PIN7:
+                RB7_InterruptHandler = interrupt_obj->Interrupt_Handler;
+                break;
+            default:
+                ret = E_NOT_OK;
+                break;
+        }
+        RBx_OnChange_Interrupt_Enable();
         
     }
     return ret; 
@@ -140,9 +224,7 @@ STD_ReturnType Interrupt_RBx_DeInit(const Interrupt_RBx_t *interrupt_obj){
     STD_ReturnType ret = E_OK;
     if(interrupt_obj == NULL) ret = E_NOT_OK; 
     else{
-        
-        
-        
+        RBx_OnChange_Interrupt_Disable();
     }
     return ret;
 }
@@ -159,18 +241,41 @@ static STD_ReturnType Interrupt_INTx_Enable(const Interrupt_INTx_t *interrupt_ob
     else{
         switch(interrupt_obj->source){
             case INTERRUPT_EXTERNAL_INT0 :
+                #if Interrupt_Priority_Levels_Enable == Interrupt_Feature_Enable
+                Interrupt_PriorityLevelsEnable();
+                Interrupt_GlobalInterruptHighEnable();
+                #else
                 Interrupt_GlobalInterruptEnable();
                 Interrupt_PeripheralInterruptEnable();
+                #endif
                 INT0_Interrupt_Enable();
                 break;
             case INTERRUPT_EXTERNAL_INT1 :
+                #if Interrupt_Priority_Levels_Enable == Interrupt_Feature_Enable
+                Interrupt_PriorityLevelsEnable();
+                if(interrupt_obj->priority == INTERRUPT_High_Priority){
+                    Interrupt_GlobalInterruptHighEnable();
+                }else{
+                    Interrupt_GlobalInterruptLowEnable();
+                }
+                #else
                 Interrupt_GlobalInterruptEnable();
                 Interrupt_PeripheralInterruptEnable();
+                #endif
                 INT1_Interrupt_Enable();
                 break;
             case INTERRUPT_EXTERNAL_INT2 :
+                #if Interrupt_Priority_Levels_Enable == Interrupt_Feature_Enable
+                Interrupt_PriorityLevelsEnable();
+                if(interrupt_obj->priority == INTERRUPT_High_Priority){
+                    Interrupt_GlobalInterruptHighEnable();
+                }else{
+                    Interrupt_GlobalInterruptLowEnable();
+                }
+                #else
                 Interrupt_GlobalInterruptEnable();
                 Interrupt_PeripheralInterruptEnable();
+                #endif
                 INT2_Interrupt_Enable();
                 break;
             default: ret = E_NOT_OK; break;

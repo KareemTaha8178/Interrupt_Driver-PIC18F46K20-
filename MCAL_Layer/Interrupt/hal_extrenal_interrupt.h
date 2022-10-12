@@ -62,7 +62,7 @@
 /* Port B */
 #define RBx_OnChange_Interrupt_Enable()                 (INTCONbits.RBIE = 1)
 #define RBx_OnChange_Interrupt_Disable()                (INTCONbits.RBIE = 0)
-#define RBx_OnChange_Interrupt_Flag_Set()               (INTCONbits.RBIF = 1)
+#define RBx_OnChange_Interrupt_Flag_Clear()             (INTCONbits.RBIF = 0)
 
 
 #if Interrupt_Priority_Levels_Enable == Interrupt_Feature_Enable

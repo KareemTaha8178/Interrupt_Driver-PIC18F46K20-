@@ -160,6 +160,65 @@ led_t led3 = {
   .port_name = PORTC_INDEX,
 };
 
+led_t led4 = {
+  .led_status = LED_LOW,
+  .pin_number = GPIO_PIN3,
+  .port_name = PORTC_INDEX,
+};
+
+void RB_int0_app_isr(void){
+   ret = led_toggle_logic(&led1);
+}
+
+
+void RB_int1_app_isr(void){
+   ret = led_toggle_logic(&led2);
+}
+
+void RB_int2_app_isr(void){
+   ret = led_toggle_logic(&led3);
+}
+
+void RB_int3_app_isr(void){
+   ret = led_toggle_logic(&led4);
+}
+
+
+Interrupt_RBx_t int1_obj = {
+   .Interrupt_Handler = RB_int0_app_isr,
+   .priority = INTERRUPT_Low_Priority,
+   .mcu_pin.direction = GPIO_INPUT_DIRECTION,
+   .mcu_pin.port = PORTB_INDEX,
+   .mcu_pin.logic = GPIO_LOW,
+   .mcu_pin.pin = GPIO_PIN4,
+};
+Interrupt_RBx_t int2_obj = {
+   .Interrupt_Handler = RB_int1_app_isr,
+   .priority = INTERRUPT_Low_Priority,
+   .mcu_pin.direction = GPIO_INPUT_DIRECTION,
+   .mcu_pin.port = PORTB_INDEX,
+   .mcu_pin.logic = GPIO_LOW,
+   .mcu_pin.pin = GPIO_PIN5,
+};
+Interrupt_RBx_t int3_obj = {
+   .Interrupt_Handler = RB_int2_app_isr,
+   .priority = INTERRUPT_Low_Priority,
+   .mcu_pin.direction = GPIO_INPUT_DIRECTION,
+   .mcu_pin.port = PORTB_INDEX,
+   .mcu_pin.logic = GPIO_LOW,
+   .mcu_pin.pin = GPIO_PIN6,
+};
+Interrupt_RBx_t int4_obj = {
+   .Interrupt_Handler = RB_int3_app_isr,
+   .priority = INTERRUPT_Low_Priority,
+   .mcu_pin.direction = GPIO_INPUT_DIRECTION,
+   .mcu_pin.port = PORTB_INDEX,
+   .mcu_pin.logic = GPIO_LOW,
+   .mcu_pin.pin = GPIO_PIN7,
+};
+
+
+/*
 void int0_app_isr(void){
    ret = led_toggle_logic(&led1);
 }
@@ -185,8 +244,8 @@ Interrupt_INTx_t int0_obj = {
 
 Interrupt_INTx_t int1_obj = {
    .Interrupt_Handler = int1_app_isr,
-   .edge = INTERRUPT_FALLING_EDGE,
-   .priority = INTERRUPT_High_Priority,
+   .edge = INTERRUPT_RAISING_EDGE,
+   .priority = INTERRUPT_Low_Priority,
    .source = INTERRUPT_EXTERNAL_INT1,
    .mcu_pin.direction = GPIO_INPUT_DIRECTION,
    .mcu_pin.port = PORTB_INDEX,
@@ -204,7 +263,7 @@ Interrupt_INTx_t int2_obj = {
    .mcu_pin.port = PORTB_INDEX,
    .mcu_pin.logic = GPIO_LOW,
    .mcu_pin.pin = GPIO_PIN2,
-};
+};*/
 
 
 int main() { 
@@ -217,10 +276,15 @@ int main() {
 
 /* initialize any pin with direction & logic */
 void Application_initialize(void){
-    ret = Interrupt_INTx_Init(&int0_obj);
+    //ret = Interrupt_INTx_Init(&int0_obj);
     ret = led_initialize(&led1);
-    ret = Interrupt_INTx_Init(&int1_obj);
+    //ret = Interrupt_INTx_Init(&int1_obj);
     ret = led_initialize(&led2);
-    ret = Interrupt_INTx_Init(&int2_obj);
+    //ret = Interrupt_INTx_Init(&int2_obj);
+    ret = Interrupt_RBx_Init(&int1_obj);
+    ret = Interrupt_RBx_Init(&int2_obj);
+    ret = Interrupt_RBx_Init(&int3_obj);
+    ret = Interrupt_RBx_Init(&int4_obj);
     ret = led_initialize(&led3);
+    ret = led_initialize(&led4);
 }
